@@ -16,7 +16,8 @@ void testApp::setup(){
 	LastByteReceived = 0;
 	zoom = 14;
 	serial.enumerateDevices();
-    serial.setup("\\\\.\\COM9",115200);
+	//serial.getDeviceList();
+    serial.setup("\\\\.\\COM15",115200);
     memset(bytesReadString, 0, 416);
     memset(PixelsReadPhoto, 0, 416);
     memset(ReadPhoto, 0, 52*8);
@@ -54,7 +55,7 @@ void testApp::update(){
 
     //serial.flush(true,true);
 	serial.writeByte('s');
-	Sleep(15);
+	Sleep(25);
     while((FirstByteReceived=serial.readByte())!=255)nRead++;
 //    if(FirstByteReceived==255)
 //    {
@@ -123,7 +124,7 @@ void testApp::update(){
     PhotoTest2.resize(PhotoTest.width,PhotoTest.height);
     PhotoTest2=PhotoTest;
     PhotoTest2.resize(8*zoom,52*zoom);
-    //PhotoTest2.threshold(threshold);
+    PhotoTest2.threshold(threshold);
     contourFinder.findContours(PhotoTest2, 20, (52*zoom*8*zoom)/3, 10, true);	// find holes
 
 }
