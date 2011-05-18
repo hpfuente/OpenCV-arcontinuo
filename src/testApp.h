@@ -40,6 +40,7 @@ class testApp : public ofBaseApp{
 		unsigned char           PixelesPhotoTest[320*240];
 
         ofSerial	serial;
+
         int nTimesRead  ;
         int nBytesRead  ;
         int nRead       ;

@@ -15,8 +15,8 @@ void testApp::setup(){
 	FirstByteReceived = 0;
 	LastByteReceived = 0;
 	zoom = 14;
+
 	serial.enumerateDevices();
-	//serial.getDeviceList();
     serial.setup("\\\\.\\COM15",115200);
     memset(bytesReadString, 0, 416);
     memset(PixelsReadPhoto, 0, 416);
@@ -31,28 +31,32 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
 
-	ofBackground(100,100,100);
+    //Initialization
+    //{
+        ofBackground(100,100,100);
+        unsigned char bytesReturned[416];
+        int base_index=0;
+        int i=0;
+        int j=0;
+        nTimesRead = 0;
+        nBytesRead = 0;
+        //nRead  = 0;
+        memset(bytesReturned, 0, 416);
+    //}
 
-    unsigned char bytesReturned[416];
-    int base_index=0;
-    int i=0;
-    int j=0;
+    //Get_Image
+    //{
+        //serial.flush(true,true);
+        serial.writeByte('s');
+        #ifdef TARGET_WIN32
+            Sleep(15);         //windows sleep in milliseconds
+        #else
+            usleep(15 * 1000);   //mac sleep in microseconds - cooler :)
+        #endif
+        while((FirstByteReceived=serial.readByte())!=255)nRead++;
 
-    nTimesRead = 0;
-	nBytesRead = 0;
-    //nRead  = 0;
+        int ByteReceived = 0;
 
-    memset(bytesReturned, 0, 416);
-
-    //serial.flush(true,true);
-	serial.writeByte('s');
-	Sleep(25);
-    while((FirstByteReceived=serial.readByte())!=255)nRead++;
-//    if(FirstByteReceived==255)
-//    {
-    int ByteReceived = 0;
-
-        //Sleep(10);
         while(  nTimesRead < 416)
         {
             ByteReceived=serial.readByte();
@@ -68,94 +72,57 @@ void testApp::update(){
         }
         LastByteReceived=serial.readByte();
 
-        //nBytesRead = serial.readBytes(bytesReturned,416);
-
         memcpy(bytesReadString, bytesReturned, 416);
-        int k=0;
-        for(int i=0;i<52*8;i++) PixelsReadPhoto[i]=bytesReadString[4*(i%104)+i/104];
+        for(int i=0;i<52*8;i++) PixelsReadPhoto[i]=bytesReadString[4*(i%104)+i/104]; //Sorting the data into the photo
+        PhotoTest.setFromPixels(PixelsReadPhoto,8,52);
+    //}
 
-//        for(j=0;j<13;j++)
-//        {
-//            for(i=0;i<8;i++)
-//            {
-//                base_index=4*i+32*j;
-//                ReadPhoto[i][j]     =bytesReadString[base_index];
-//                ReadPhoto[i][j+13]  =bytesReadString[base_index+1];
-//                ReadPhoto[i][j+26]  =bytesReadString[base_index+2];
-//                ReadPhoto[i][j+39]  =bytesReadString[base_index+3];
-//            }
-//
-//        }
-//        for(j=0;j<52;j++)
-//        {
-//            for(i=0;i<8;i++)
-//            {
-//                PixelsReadPhoto[i+8*j]=ReadPhoto[i][j];
-//            }
-//
-//        }
-//    }
-//    else
-//    {
-//        memset(PixelsReadPhoto, 0, 416);
-//        serial.flush(true,true);
-//    }
-//        nRead=0;
-//        for(j=0;j<52;j++)
-//        {
-//            for(i=0;i<8;i++)
-//            {
-//                if(nRead>255)nRead=255;
-//                PixelsReadPhoto[i+8*j]=(unsigned char)255*i/7;
-//                nRead++;
-//            }
-//
-//        }
-    PhotoTest.setFromPixels(PixelsReadPhoto,8,52);
-    PhotoTest2.resize(PhotoTest.width,PhotoTest.height);
-    PhotoTest2=PhotoTest;
-    PhotoTest2.resize(8*zoom,52*zoom);
-    PhotoTest2.threshold(threshold);
-    contourFinder.findContours(PhotoTest2, 20, (52*zoom*8*zoom)/3, 10, true);	// find holes
-    cout << contourFinder.nBlobs << endl;
+    //Zooming
+    //{
+        PhotoTest2.resize(PhotoTest.width,PhotoTest.height);
+        PhotoTest2=PhotoTest;
+        PhotoTest2.resize(8*zoom,52*zoom);
+    //}
 
-    if (contourFinder.nBlobs)
-    {
-        float xPos,yPos;
-        ofxOscMessage m;
-        m.setAddress( "/blobFound" );
-        m.addIntArg( contourFinder.nBlobs );
-        for (int i=0; i < contourFinder.nBlobs; i++)
+    //Find_Blobs
+    //{
+        PhotoTest2.threshold(threshold);
+        contourFinder.findContours(PhotoTest2, 20, (52*zoom*8*zoom)/3, 10, true);	// find holes
+        cout << contourFinder.nBlobs << endl;
+    //}
+
+    //Send_OSC
+    //{
+        if (contourFinder.nBlobs)
         {
-            xPos = contourFinder.blobs[i].centroid.x;
-            yPos = contourFinder.blobs[i].centroid.y;
-            cout << xPos << endl;
-            cout << yPos << endl;
-
-            m.addFloatArg( xPos );
-            m.addFloatArg( yPos );
-//			m.addIntArg( y );
-
+            float xPos,yPos;
+            ofxOscMessage m;
+            m.setAddress( "/blobFound" );
+            m.addIntArg( contourFinder.nBlobs );
+            for (int i=0; i < contourFinder.nBlobs; i++)
+            {
+                xPos = contourFinder.blobs[i].centroid.x;
+                yPos = contourFinder.blobs[i].centroid.y;
+                cout << xPos << endl;
+                cout << yPos << endl;
+                m.addFloatArg( xPos );
+                m.addFloatArg( yPos );
+            }
+            sender.sendMessage( m );
         }
-        sender.sendMessage( m );
-
-    }
-    else
-    {
-        ofxOscMessage m;
-        m.setAddress( "/noBlobFound" );
-        cout << "noBlobFound" << endl;
-    //			m.addIntArg( x );
-    //			m.addIntArg( y );
-        sender.sendMessage( m );
-    }
+        else
+        {
+            cout << "noBlobFound" << endl;
+            ofxOscMessage m;
+            m.setAddress( "/noBlobFound" );
+            sender.sendMessage( m );
+        }
+    //}
 
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
-	//memset(bytesReadString, 0, 320*240+1);
 
 	// draw the incoming, the grayscale, the bg and the thresholded difference
 	ofSetColor(0xffffff);
