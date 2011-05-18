@@ -22,18 +22,9 @@ void testApp::setup(){
     memset(PixelsReadPhoto, 0, 416);
     memset(ReadPhoto, 0, 52*8);
 
-//    memset(PhotoTest3Pixels, 0, 4);
-//    PhotoTest3Pixels[0]=0;
-//    PhotoTest3Pixels[1]=90;
-//    PhotoTest3Pixels[2]=180;
-//    PhotoTest3Pixels[3]=255;
-//    PhotoTest3.allocate(2,2);
-//	PhotoTest4.allocate(320,240);
-//    PhotoTest3.setFromPixels(PhotoTest3Pixels,2,2);
-//    PhotoTest4.resize(PhotoTest3.width,PhotoTest3.height);
-//    PhotoTest4=PhotoTest3;
-//    PhotoTest4.resize(320,240);
     serial.flush(true,true);
+
+    sender.setup( HOST, PORT );
 
 }
 
@@ -126,6 +117,38 @@ void testApp::update(){
     PhotoTest2.resize(8*zoom,52*zoom);
     PhotoTest2.threshold(threshold);
     contourFinder.findContours(PhotoTest2, 20, (52*zoom*8*zoom)/3, 10, true);	// find holes
+    cout << contourFinder.nBlobs << endl;
+
+    if (contourFinder.nBlobs)
+    {
+        float xPos,yPos;
+        ofxOscMessage m;
+        m.setAddress( "/blobFound" );
+        m.addIntArg( contourFinder.nBlobs );
+        for (int i=0; i < contourFinder.nBlobs; i++)
+        {
+            xPos = contourFinder.blobs[i].centroid.x;
+            yPos = contourFinder.blobs[i].centroid.y;
+            cout << xPos << endl;
+            cout << yPos << endl;
+
+            m.addFloatArg( xPos );
+            m.addFloatArg( yPos );
+//			m.addIntArg( y );
+
+        }
+        sender.sendMessage( m );
+
+    }
+    else
+    {
+        ofxOscMessage m;
+        m.setAddress( "/noBlobFound" );
+        cout << "noBlobFound" << endl;
+    //			m.addIntArg( x );
+    //			m.addIntArg( y );
+        sender.sendMessage( m );
+    }
 
 }
 

@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="debug" />
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvBlob.h" open="1" top="1" tabpos="5">
-		<Cursor position="347" topLine="12" />
-	</File>
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.h" open="1" top="0" tabpos="4">
-		<Cursor position="446" topLine="15" />
-	</File>
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvImage.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1570" topLine="0" />
-	</File>
 	<File name="src\main.cpp" open="1" top="0" tabpos="3">
 		<Cursor position="415" topLine="0" />
 	</File>
 	<File name="src\testApp.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="585" topLine="0" />
+		<Cursor position="3349" topLine="0" />
 	</File>
-	<File name="src\testApp.h" open="1" top="0" tabpos="2">
-		<Cursor position="562" topLine="16" />
+	<File name="src\testApp.h" open="1" top="1" tabpos="2">
+		<Cursor position="179" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

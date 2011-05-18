@@ -3,12 +3,16 @@
 
 #include "ofMain.h"
 
+
+
 #include "ofxOpenCv.h"
-#include <windows.h>
 
-//#define _USE_LIVE_VIDEO		// uncomment this to use a live camera
-								// otherwise, we'll use a movie file
+#include "ofxOsc.h"
 
+//#include <windows.h>
+
+#define HOST "localhost"
+#define PORT 12345
 
 class testApp : public ofBaseApp{
 
@@ -24,6 +28,7 @@ class testApp : public ofBaseApp{
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
+
 
         ofxCvContourFinder 	contourFinder;
 
@@ -44,12 +49,14 @@ class testApp : public ofBaseApp{
 		unsigned char		PixelsReadPhoto[416];			// a string needs a null terminator, so we need 3 + 1 bytes
         unsigned char		ReadPhoto[52][8];			// a string needs a null terminator, so we need 3 + 1 bytes
 
-//        ofxCvGrayscaleImage 	PhotoTest3;
-//		ofxCvGrayscaleImage 	PhotoTest4;
-//		unsigned char		    PhotoTest3Pixels[4];
-		unsigned char           FirstByteReceived;
-		unsigned char           LastByteReceived;
+		unsigned char       FirstByteReceived;
+		unsigned char       LastByteReceived;
 
+
+
+	private:
+
+		ofxOscSender sender;
 
 };
 

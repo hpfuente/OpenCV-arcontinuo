@@ -810,10 +810,10 @@
 	"testApp.h"
 	"ofAppGlutWindow.h"
 
-1304062815 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.h
+1305686159 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.h
 	"ofMain.h"
 	"ofxOpenCv.h"
-	<windows.h>
+	"ofxOsc.h"
 
 1302995366 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxopencv\src\ofxopencv.h
 	"ofxCvConstants.h"
@@ -830,6 +830,88 @@
 	"ofxCvFloatImage.h"
 	"ofxCvShortImage.h"
 
-1305263667 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.cpp
+1305686159 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.cpp
 	"testApp.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxosc.h
+	"ofxOscArg.h"
+	"ofxOscMessage.h"
+	"ofxOscSender.h"
+	"ofxOscReceiver.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscarg.h
+	"ofConstants.h"
+	<string>
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscmessage.h
+	"ofxOscArg.h"
+	<vector>
+	<string>
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscsender.h
+	<string>
+	"OscTypes.h"
+	"OscOutboundPacketStream.h"
+	"ofxOscBundle.h"
+	"ofxOscMessage.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\osc\osctypes.h
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\osc\oscoutboundpacketstream.h
+	"OscTypes.h"
+	"OscException.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\osc\oscexception.h
+	<exception>
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscbundle.h
+	<vector>
+	"ofxOscMessage.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscreceiver.h
+	<deque>
+	"ofMain.h"
+	<windows.h>
+	<pthread.h>
+	"OscTypes.h"
+	"OscPacketListener.h"
+	"UdpSocket.h"
+	"ofxOscMessage.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\osc\oscpacketlistener.h
+	"OscReceivedElements.h"
+	"../ip/PacketListener.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\osc\oscreceivedelements.h
+	"OscTypes.h"
+	"OscException.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\ip\packetlistener.h
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\ip\udpsocket.h
+	"NetworkingUtils.h"
+	"IpEndpointName.h"
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\ip\networkingutils.h
+
+1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\libs\oscpack\include\ip\ipendpointname.h
+
+1302995359 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscbundle.cpp
+	"ofxOscBundle.h"
+
+1302995359 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscmessage.cpp
+	"ofxOscMessage.h"
+	<iostream>
+	<assert.h>
+
+1302995359 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscreceiver.cpp
+	"ofxOscReceiver.h"
+	<pthread.h>
+	<iostream>
+	<assert.h>
+
+1302995359 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxoscsender.cpp
+	"ofxOscSender.h"
+	"UdpSocket.h"
+	<assert.h>
 
