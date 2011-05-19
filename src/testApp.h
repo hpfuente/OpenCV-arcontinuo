@@ -9,9 +9,7 @@
 
 #include "ofxOsc.h"
 
-//#include <windows.h>
-
-#define HOST "localhost"
+#define HOST "146.155.151.121"
 #define PORT 12345
 
 class testApp : public ofBaseApp{
@@ -31,6 +29,7 @@ class testApp : public ofBaseApp{
 
 
         ofxCvContourFinder 	contourFinder;
+        //ofCvBlobTracker  blobTracker;
 
 		int 				threshold;
 		bool				bLearnBakground;

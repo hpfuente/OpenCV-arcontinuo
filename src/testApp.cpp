@@ -49,7 +49,7 @@ void testApp::update(){
         //serial.flush(true,true);
         serial.writeByte('s');
         #ifdef TARGET_WIN32
-            Sleep(15);         //windows sleep in milliseconds
+            Sleep(20);         //windows sleep in milliseconds
         #else
             usleep(15 * 1000);   //mac sleep in microseconds - cooler :)
         #endif
@@ -95,18 +95,21 @@ void testApp::update(){
     //{
         if (contourFinder.nBlobs)
         {
-            float xPos,yPos;
+            float xPos,yPos,zPos;
             ofxOscMessage m;
-            m.setAddress( "/blobFound" );
+            m.setAddress( "/updateBlob" );
             m.addIntArg( contourFinder.nBlobs );
             for (int i=0; i < contourFinder.nBlobs; i++)
             {
                 xPos = contourFinder.blobs[i].centroid.x;
                 yPos = contourFinder.blobs[i].centroid.y;
+                zPos = contourFinder.blobs[i].area;
                 cout << xPos << endl;
                 cout << yPos << endl;
+                cout << zPos << endl;
                 m.addFloatArg( xPos );
                 m.addFloatArg( yPos );
+                m.addFloatArg( zPos );
             }
             sender.sendMessage( m );
         }
