@@ -6,13 +6,14 @@
 
 
 #include "ofxOpenCv.h"
+#include "ofxCvBlobTracker.h"
 
 #include "ofxOsc.h"
 
 #define HOST "146.155.151.121"
 #define PORT 12345
 
-class testApp : public ofBaseApp{
+class testApp : public ofBaseApp, public ofxCvBlobListener {
 
 	public:
 
@@ -27,12 +28,15 @@ class testApp : public ofBaseApp{
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 
+        void blobOn( int x, int y, int id, int order );
+        void blobMoved( int x, int y, int id, int order );
+        void blobOff( int x, int y, int id, int order );
 
         ofxCvContourFinder 	contourFinder;
-        //ofCvBlobTracker  blobTracker;
+        ofxCvBlobTracker    blobTracker;
 
 		int 				threshold;
-		bool				bLearnBakground;
+
 
 		ofxCvGrayscaleImage 	PhotoTest;
 		ofxCvGrayscaleImage 	PhotoTest2;
@@ -51,6 +55,9 @@ class testApp : public ofBaseApp{
 
 		unsigned char       FirstByteReceived;
 		unsigned char       LastByteReceived;
+
+		int FingersBlobs[10][2];
+		unsigned char test;
 
 
 

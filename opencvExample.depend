@@ -810,9 +810,10 @@
 	"testApp.h"
 	"ofAppGlutWindow.h"
 
-1305789559 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.h
+1305919696 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.h
 	"ofMain.h"
 	"ofxOpenCv.h"
+	"ofxCvBlobTracker.h"
 	"ofxOsc.h"
 
 1302995366 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxopencv\src\ofxopencv.h
@@ -830,7 +831,7 @@
 	"ofxCvFloatImage.h"
 	"ofxCvShortImage.h"
 
-1305750555 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.cpp
+1305921447 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\apps\addonsexamples\opencvexample\src\testapp.cpp
 	"testApp.h"
 
 1302995359 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxosc\src\ofxosc.h
@@ -914,4 +915,23 @@
 	"ofxOscSender.h"
 	"UdpSocket.h"
 	<assert.h>
+
+1305875979 source:e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxopencv\src\ofxcvblobtracker.cpp
+	"ofxCvBlobTracker.h"
+
+1305863529 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxopencv\src\ofxcvblobtracker.h
+	<map>
+	<vector>
+	"ofMain.h"
+	"ofxCvTrackedBlob.h"
+	"ofxCvConstants_Track.h"
+
+1305863529 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxopencv\src\ofxcvtrackedblob.h
+	"ofxOpenCv.h"
+
+1305863708 e:\my documents\puc\arcontinuo\openframeworks\of_prerelease_v0062_win_cb_fat\addons\ofxopencv\src\ofxcvconstants_track.h
+	<iostream>
+	"cv.h"
+	"ofxCvBlob.h"
+	"ofxCvTrackedBlob.h"
 

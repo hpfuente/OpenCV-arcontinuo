@@ -4,7 +4,6 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 
-	bLearnBakground = true;
 	threshold = 25;
 
 	PhotoTest.allocate(8,52);
@@ -15,6 +14,7 @@ void testApp::setup(){
 	FirstByteReceived = 0;
 	LastByteReceived = 0;
 	zoom = 14;
+	test=1000;
 
 	serial.enumerateDevices();
     serial.setup("\\\\.\\COM15",115200);
@@ -26,6 +26,9 @@ void testApp::setup(){
 
     sender.setup( HOST, PORT );
 
+    blobTracker.setListener( this );
+
+    memset(FingersBlobs, 0, 10*2*sizeof FingersBlobs[0][0]);
 }
 
 //--------------------------------------------------------------
@@ -73,7 +76,18 @@ void testApp::update(){
         LastByteReceived=serial.readByte();
 
         memcpy(bytesReadString, bytesReturned, 416);
-        for(int i=0;i<52*8;i++) PixelsReadPhoto[i]=bytesReadString[4*(i%104)+i/104]; //Sorting the data into the photo
+
+
+
+        for(int i=0;i<52*8;i++)
+        {
+
+            bytesReadString[232]=0;
+            PixelsReadPhoto[i]=bytesReadString[4*(i%104)+i/104]; //Sorting the data into the photo
+            if(PixelsReadPhoto[i]>200)test=(unsigned char)i;
+        }
+        PixelsReadPhoto[94]=0;
+
         PhotoTest.setFromPixels(PixelsReadPhoto,8,52);
     //}
 
@@ -88,70 +102,69 @@ void testApp::update(){
     //{
         PhotoTest2.threshold(threshold);
         contourFinder.findContours(PhotoTest2, 20, (52*zoom*8*zoom)/3, 10, true);	// find holes
-        cout << contourFinder.nBlobs << endl;
+        //cout << contourFinder.nBlobs << endl;
     //}
 
-    //Send_OSC
-    //{
-        if (contourFinder.nBlobs)
-        {
-            float xPos,yPos,zPos;
-            ofxOscMessage m;
-            m.setAddress( "/updateBlob" );
-            m.addIntArg( contourFinder.nBlobs );
-            for (int i=0; i < contourFinder.nBlobs; i++)
-            {
-                xPos = contourFinder.blobs[i].centroid.x;
-                yPos = contourFinder.blobs[i].centroid.y;
-                zPos = contourFinder.blobs[i].area;
-                cout << xPos << endl;
-                cout << yPos << endl;
-                cout << zPos << endl;
-                m.addFloatArg( xPos );
-                m.addFloatArg( yPos );
-                m.addFloatArg( zPos );
-            }
-            sender.sendMessage( m );
-        }
-        else
-        {
-            cout << "noBlobFound" << endl;
-            ofxOscMessage m;
-            m.setAddress( "/noBlobFound" );
-            sender.sendMessage( m );
-        }
-    //}
+        blobTracker.trackBlobs( contourFinder.blobs );
+
+//    //Send_OSC
+//    //{
+//        if (contourFinder.nBlobs)
+//        {
+//            float xPos,yPos,zPos;
+//            ofxOscMessage m;
+//            m.setAddress( "/updateBlob" );
+//            m.addIntArg( contourFinder.nBlobs );
+//            for (int i=0; i < contourFinder.nBlobs; i++)
+//            {
+//                xPos = contourFinder.blobs[i].centroid.x;
+//                yPos = contourFinder.blobs[i].centroid.y;
+//                zPos = contourFinder.blobs[i].area;
+//                cout << xPos << endl;
+//                cout << yPos << endl;
+//                cout << zPos << endl;
+//                m.addFloatArg( xPos );
+//                m.addFloatArg( yPos );
+//                m.addFloatArg( zPos );
+//            }
+//            sender.sendMessage( m );
+//        }
+//        else
+//        {
+//            cout << "noBlobFound" << endl;
+//            ofxOscMessage m;
+//            m.setAddress( "/noBlobFound" );
+//            sender.sendMessage( m );
+//        }
+//    //}
 
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
 
-	// draw the incoming, the grayscale, the bg and the thresholded difference
-	ofSetColor(0xffffff);
-	PhotoTest2.draw(20,20); //main
-	//PhotoTest.draw(20,20+52*20+20);
 
-    // then draw the contours:
+	ofSetColor(0xffffff);
+	PhotoTest2.draw(20,20);
+
 	ofFill();
 	ofSetColor(0x333333);
 	ofRect(zoom*10,20,8*zoom,52*zoom);
 	ofSetColor(0xffffff);
-
-	// we could draw the whole contour finder
-	//contourFinder.draw(360,540);
-
-	// or, instead we can draw each blob individually,
-	// this is how to get access to them:
     for (int i = 0; i < contourFinder.nBlobs; i++){
         contourFinder.blobs[i].draw(zoom*10,20);
     }
+
+    ofSetColor(0x000000);
+	ofRect(zoom*20,20,8*zoom,52*zoom);
+	ofSetColor(0xffffff);
+    blobTracker.draw(zoom*20,20);
 
 	// finally, a report:
 
 	ofSetColor(0xffffff);
 	char reportStr[1024];
-	sprintf(reportStr,  "threshold %i (press: +/-)\n X num blobs found:%i\n X fps:%f\n X first Byte:%i\n X Last Byte:%i\n X Buffer Bytes extra readed:%i\n X #Image Bytes:%i\n X #Image Bytes Total:%i\n X bytesReadString[4*(1%104+1/104)]:%i\n X bytesReadString[4*(21%104+21/104)]:%i\n X bytesReadString[4*(49%104+49/104)]:%i\n X bytesReadString[4*(113%104+113/104)]:%i\n X bytesReadString[4*(189%104+189/104)]:%i\n X bytesReadString[4*(234%104+234/104)]:%i\n X Pixels[1]:%i\n X Pixels[21]:%i\n X Pixels[49]:%i\n X Pixels[113]:%i\n X Pixels[189]:%i\n X Pixels[234]:%i"
+	sprintf(reportStr,  "threshold %i (press: +/-)\n X num blobs found:%i\n X fps:%f\n X first Byte:%i\n X Last Byte:%i\n X Buffer Bytes extra readed:%i\n X #Image Bytes:%i\n X #Image Bytes Total:%i\n Pos:%i"
                         , threshold
                         , contourFinder.nBlobs
                         , ofGetFrameRate()
@@ -160,20 +173,9 @@ void testApp::draw(){
                         , nRead
                         , nTimesRead
                         , nBytesRead
-                        , bytesReadString[4*(1%104+1/104)]
-                        , bytesReadString[4*(21%104+21/104)]
-                        , bytesReadString[4*(49%104+49/104)]
-                        , bytesReadString[4*(113%104+113/104)]
-                        , bytesReadString[4*(189%104+189/104)]
-                        , bytesReadString[4*(234%104+234/104)]
-                        , PixelsReadPhoto[1]
-                        , PixelsReadPhoto[21]
-                        , PixelsReadPhoto[49]
-                        , PixelsReadPhoto[113]
-                        , PixelsReadPhoto[189]
-                        , PixelsReadPhoto[234]
+                        , test
                         );
-	ofDrawBitmapString(reportStr, 20*zoom, 20);
+	ofDrawBitmapString(reportStr, 30*zoom, 20);
 
 }
 
@@ -182,9 +184,6 @@ void testApp::draw(){
 void testApp::keyPressed  (int key){
 
 	switch (key){
-		case ' ':
-			bLearnBakground = true;
-			break;
 		case '+':
 			threshold ++;
 			if (threshold > 255) threshold = 255;
@@ -216,5 +215,120 @@ void testApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
 
+}
+
+void testApp::blobOn( int x, int y, int id, int order ) {
+    cout << "blobOn() - id:" << id << " order:" << order << endl;
+    for(int i=0;i<10;i++)
+    {
+        if(FingersBlobs[i][0]==0)
+        {
+            FingersBlobs[i][0]=1;
+            FingersBlobs[i][1]=id;
+
+            ofxCvTrackedBlob blob = blobTracker.getById( id );
+
+            float xPos,yPos,zPos,area;
+
+            const char base[] = "/addBlob";
+            char filename [7];
+            sprintf(filename, "%s %d", base, i);
+            cout << filename << endl;
+
+            ofxOscMessage m;
+
+            m.setAddress("/addBlob");
+
+
+            xPos = blob.centroid.x/(8*zoom);
+            yPos = blob.centroid.y/(52*zoom);
+            zPos = blob.centroid.z;
+            area = blob.area;
+
+            m.addIntArg( i );
+//            m.addFloatArg( xPos );
+//            m.addFloatArg( yPos );
+//            m.addFloatArg( zPos );
+//            m.addFloatArg( area );
+
+            sender.sendMessage( m );
+            break;
+        }
+    }
+}
+void testApp::blobMoved( int x, int y, int id, int order) {
+    cout << "blobMoved() - id:" << id << " order:" << order << endl;
+
+    // full access to blob object ( get a reference)
+    ofxCvTrackedBlob blob = blobTracker.getById( id );
+    for(int i=0;i<10;i++)
+    {
+        if(FingersBlobs[i][1]==id)
+        {
+
+            float xPos,yPos,zPos,area;
+
+            const char base[] = "/updateBlob";
+            char filename [7];
+            sprintf(filename, "%s %d", base, i);
+
+            ofxOscMessage m;
+
+            m.setAddress("/updateBlob");
+
+            xPos = blob.centroid.x/(8*zoom);
+            yPos = blob.centroid.y/(52*zoom);
+            zPos = 0.5;//blob.centroid.z;
+            area = 1.5*blob.area/(zoom*8*zoom*52);
+
+            m.addIntArg ( i );
+            m.addFloatArg( xPos );
+            m.addFloatArg( yPos );
+            m.addFloatArg( area );
+            m.addFloatArg( area );
+            cout << filename <<" centroide: x=" << xPos << " y=" << yPos << " z=" << zPos << " area=" << area << endl;
+            sender.sendMessage( m );
+            break;
+        }
+    }
+
+}
+void testApp::blobOff( int x, int y, int id, int order ) {
+    cout << "blobOff() - id:" << id << " order:" << order << endl;
+    for(int i=0;i<10;i++)
+    {
+        if(FingersBlobs[i][1]==id)
+        {
+
+            float xPos,yPos,zPos,area;
+
+            const char base[] = "/removeBlob";
+            char filename [7];
+            sprintf(filename, "%s %d", base, i);
+            cout << filename << endl;
+
+
+            ofxOscMessage m;
+
+            m.setAddress("/removeBlob");
+
+            xPos = 0;
+            yPos = 0;
+            zPos = 0;
+            area = 0;
+
+            m.addIntArg( i );
+//            m.addFloatArg( xPos );
+//            m.addFloatArg( yPos );
+//            m.addFloatArg( zPos );
+//            m.addFloatArg( area );
+
+            sender.sendMessage( m );
+
+            FingersBlobs[i][0]=0;
+            FingersBlobs[i][1]=0;
+            break;
+        }
+    }
 }
 

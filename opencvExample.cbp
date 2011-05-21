@@ -118,6 +118,8 @@
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvBlob.h">
 			<Option virtualFolder="addons\ofxOpenCv\src" />
 		</Unit>
+		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvBlobTracker.cpp" />
+		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvBlobTracker.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvColorImage.cpp">
 			<Option virtualFolder="addons\ofxOpenCv\src" />
 		</Unit>
@@ -127,6 +129,7 @@
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvConstants.h">
 			<Option virtualFolder="addons\ofxOpenCv\src" />
 		</Unit>
+		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvConstants_Track.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.cpp">
 			<Option virtualFolder="addons\ofxOpenCv\src" />
 		</Unit>
@@ -160,6 +163,7 @@
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvShortImage.h">
 			<Option virtualFolder="addons\ofxOpenCv\src" />
 		</Unit>
+		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxCvTrackedBlob.h" />
 		<Unit filename="..\..\..\addons\ofxOpenCv\src\ofxOpenCv.h">
 			<Option virtualFolder="addons\ofxOpenCv\src" />
 		</Unit>

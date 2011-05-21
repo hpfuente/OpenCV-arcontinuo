@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="debug" />
-	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvBlob.h" open="1" top="0" tabpos="5">
-		<Cursor position="1348" topLine="27" />
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvBlob.h" open="0" top="0" tabpos="5">
+		<Cursor position="486" topLine="11" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvBlobTracker.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="10081" topLine="378" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvBlobTracker.h" open="0" top="0" tabpos="0">
+		<Cursor position="1903" topLine="38" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvConstants.h" open="0" top="0" tabpos="0">
+		<Cursor position="194" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="3934" topLine="94" />
 	</File>
 	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvContourFinder.h" open="1" top="0" tabpos="4">
-		<Cursor position="546" topLine="0" />
+		<Cursor position="1687" topLine="42" />
 	</File>
-	<File name="src\main.cpp" open="1" top="0" tabpos="3">
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvGrayscaleImage.h" open="0" top="0" tabpos="0">
+		<Cursor position="329" topLine="10" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvMain.h" open="0" top="0" tabpos="6">
+		<Cursor position="149" topLine="0" />
+	</File>
+	<File name="..\..\..\addons\ofxOpenCv\src\ofxCvTrackedBlob.h" open="0" top="0" tabpos="0">
+		<Cursor position="939" topLine="27" />
+	</File>
+	<File name="src\main.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="415" topLine="0" />
 	</File>
-	<File name="src\testApp.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="3157" topLine="0" />
+	<File name="src\testApp.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="2692" topLine="86" />
 	</File>
 	<File name="src\testApp.h" open="1" top="0" tabpos="2">
-		<Cursor position="140" topLine="0" />
+		<Cursor position="756" topLine="21" />
 	</File>
 </CodeBlocks_layout_file>
